@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PeopleComponent } from './people/people.component';
+import {MaterialModule} from './material.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PeopleComponent } from './people/people.component';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
