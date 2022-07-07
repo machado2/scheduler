@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatInput } from '@angular/material/input';
 import { Person } from '../person';
-import { PeopleService } from '../people.service';
+import { ConfigurationService } from '../configuration.service';
 
 @Component({
   selector: 'app-people',
@@ -11,15 +11,14 @@ import { PeopleService } from '../people.service';
 })
 export class PeopleComponent implements AfterViewInit {
 
-  constructor(private peopleService: PeopleService) { }
+  constructor(private configurationService: ConfigurationService) { }
 
   ngAfterViewInit(): void {
-    this.peopleService.getPeople()
-      .subscribe(people => {
-          this.table.dataSource = people;
+    this.configurationService.getConfiguration()
+      .subscribe(config => {
+          this.table.dataSource = config.people;
           this.table.renderRows();
-      }
-      );
+      });
   }
 
   @ViewChild(MatTable) table!: MatTable<Person>;
@@ -30,7 +29,7 @@ export class PeopleComponent implements AfterViewInit {
   dataSource: Person[] = [];
 
   removePerson(person: Person): void {
-    this.peopleService.removePerson(person);
+    this.configurationService.removePerson(person);
   }
 
   addPerson() {
@@ -38,7 +37,7 @@ export class PeopleComponent implements AfterViewInit {
     if (name.length < 1) {
       return;
     }
-    this.peopleService.addPerson(name);
+    this.configurationService.addPerson(name);
     this.input.value = "";
   }
 
