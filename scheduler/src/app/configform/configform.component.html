@@ -1,19 +1,24 @@
-<app-people></app-people>
-
-<div id="parameters" (change)="configChanged()">
+<mat-card>
+<div (change)="configChanged()">
     <div>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field appearance="fill">
             <mat-label>Starting date</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="startingDate" (dateInput)="configChanged()">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="parameters.startingDate" (dateInput)="configChanged()">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
     </div>
     <div>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <input matInput type="number" min="5" max="365" placeholder="Number of days to schedule"
-                [(ngModel)]="numberOfDays">
+                [(ngModel)]="parameters.numberOfDays">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <input matInput type="number" min="1" max="99" placeholder="Number of shifts in a day"
+                [(ngModel)]="parameters.numberOfShifts">
         </mat-form-field>
     </div>
 </div>
+</mat-card>

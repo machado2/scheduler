@@ -15,7 +15,7 @@ export class ScheduleComponent implements AfterViewInit {
 
   results: Result[] = [];
 
-  displayedColumns: string[] = ['weekday', 'date', 'name'];
+  displayedColumns: string[] = ['weekday', 'date', 'shift', 'name'];
 
   ngAfterViewInit(): void {
     this.scheduleService.results.subscribe((results) => {

@@ -14,15 +14,18 @@ export class ScheduleService {
   constructor(private configurationService: ConfigurationService) {
     configurationService.getConfiguration()
       .subscribe(config => {
-        let date = config.startingDate;
+        const params = config.parameters;
+        const people = config.people;
+        let date = params.startingDate;
         const newResults = [];
-        for (var i = 0; i < config.numberOfDays; i++)
-        {
-          const person = config.people[Math.floor(Math.random() * config.people.length)];
-          newResults.push(new Result(date, person));
-          date = date.plus({ days : 1});
+        for (var i = 0; i < params.numberOfDays; i++) {
+          for (var shift = 0; shift < params.numberOfShifts; shift++) {
+            const person = people[Math.floor(Math.random() * people.length)];
+            newResults.push(new Result(date, shift, person));
+          }
+          date = date.plus({ days: 1 });
         }
         this.results.next(newResults);
       });
-   }
+  }
 }

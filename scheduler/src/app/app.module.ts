@@ -54,13 +54,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PeopleComponent } from './people/people.component';
 import { ConfigformComponent } from './configform/configform.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { RestrictionsComponent } from './restrictions/restrictions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PeopleComponent,
     ConfigformComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    RestrictionsComponent
   ],
   imports: [
     FormsModule,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, debounceTime } from 'rxjs';
 import { Configuration } from './configuration';
 import { Person } from './person';
-import { DateTime } from 'luxon';
+import { Parameters } from './parameters';
 
 @Injectable({
   providedIn: 'root'
@@ -41,10 +41,9 @@ export class ConfigurationService {
     });
   }
 
-  setParameters(startingDate: DateTime, numberOfDays: number): void {
+  setParameters(parameters: Parameters): void {
     this.modifyConfiguration(config => {
-      config.numberOfDays = numberOfDays;
-      config.startingDate = startingDate;
+      config.parameters = parameters;
     });
   }
 

@@ -1,11 +1,11 @@
 import { Person } from './person';
+import { Parameters } from './parameters';
 import { DateTime } from 'luxon';
 
 export class Configuration {
 
     people: Person[] = [];
-    startingDate: DateTime = DateTime.now();
-    numberOfDays: number = 7;
+    parameters: Parameters = new Parameters();
     
     addPerson(name: string) {
         name = name.trim();
