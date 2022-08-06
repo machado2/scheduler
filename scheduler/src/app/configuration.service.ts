@@ -20,6 +20,7 @@ export class ConfigurationService {
       config.addPerson('Alice');
       config.addPerson('Bob');
       config.addPerson('Carlos');
+      config.addPerson('Rubens');
     });
   }
 

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { LuxonDateAdapter, MAT_LUXON_DATE_FORMATS } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import {A11yModule} from '@angular/cdk/a11y';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
@@ -68,6 +69,7 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     A11yModule,
     CdkAccordionModule,

@@ -1,6 +1,5 @@
 import { Person } from './person';
 import { Parameters } from './parameters';
-import { DateTime } from 'luxon';
 
 export class Configuration {
 
@@ -13,7 +12,7 @@ export class Configuration {
           if (this.people.filter((p) => p.name.toLowerCase() == name.toLowerCase()).length > 0) {
             return;
           }
-          this.people.push({ name: name });
+          this.people.push({ name: name, id: crypto.randomUUID() });
         }
       }
     

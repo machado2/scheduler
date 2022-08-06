@@ -3,6 +3,7 @@ import { ConfigurationService } from '../configuration.service';
 import { ScheduleService } from '../schedule.service';
 import { Result } from '../result';
 import { DateTime } from 'luxon';
+import { Solution } from '../solution';
 
 @Component({
   selector: 'app-schedule',
@@ -11,15 +12,22 @@ import { DateTime } from 'luxon';
 })
 export class ScheduleComponent implements AfterViewInit {
 
-  constructor(private scheduleService: ScheduleService) { }
+  constructor(public scheduleService: ScheduleService) { }
 
-  results: Result[] = [];
+  solution: Solution | null = null;
+
+  iterationsTaken: number = 0;
+
+  get results(): Result[] {
+    return this.solution?.results ?? [];
+  }
 
   displayedColumns: string[] = ['weekday', 'date', 'shift', 'name'];
 
   ngAfterViewInit(): void {
-    this.scheduleService.results.subscribe((results) => {
-      this.results = results;
+    this.scheduleService.getResults().subscribe((s) => {
+      this.solution = s;
+      this.iterationsTaken = this.scheduleService.iterationCount;
     });
   }
 
