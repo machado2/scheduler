@@ -13,3 +13,4 @@ serde = { version = "*", features = ["derive", "rc"] }
 chrono = { version = "*", features = ["serde"] }
 rand = "*"
 env_logger = "*"
+actix-files = "*"

@@ -5,8 +5,7 @@ export class Result {
     constructor(
         public readonly date: DateTime, 
         public readonly shift: number, 
-        public readonly person: Person, 
-        public problem: boolean = false) {
+        public readonly person: Person) {
 
     }
 

@@ -1,3 +1,4 @@
+use actix_files::Files;
 use actix_web::{middleware::Logger, post, web, App, HttpServer};
 use env_logger::Env;
 pub mod configuration;
@@ -139,9 +140,11 @@ async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(Env::default().default_filter_or("info"));
 
     HttpServer::new(|| {
+
         App::new()
             .wrap(Logger::default())
             .service(solve)
+            .service(Files::new("/", "./dist").prefer_utf8(true))
     })
     .bind(("0.0.0.0", 8080))?
     .run()
