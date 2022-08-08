@@ -14,4 +14,5 @@ RUN mkdir -p /scheduler/dist
 COPY --from=builder ./target/release/scheduler /scheduler
 COPY --from=node /usr/src/app/dist/scheduler /scheduler/dist
 EXPOSE 8080
-CMD ["/scheduler/scheduler"]
+WORKDIR /scheduler
+CMD ["./scheduler"]

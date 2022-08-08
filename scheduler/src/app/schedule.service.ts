@@ -13,12 +13,18 @@ class Shift {
     public problem: boolean) { }
 }
 
+export enum ScheduleStatus {
+  Idle,
+  Loading,
+  NotFound
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleService {
 
-  private results = new BehaviorSubject<Result[] | null>(null);
+  private results = new BehaviorSubject<Result[] | ScheduleStatus>(ScheduleStatus.Idle);
   getResults() {
     return this.results;
   }
@@ -26,11 +32,16 @@ export class ScheduleService {
   constructor(configurationService: ConfigurationService, private http: HttpClient) {
     configurationService.getConfiguration()
       .subscribe(config => {
+        this.results.next(ScheduleStatus.Loading);
         this.http.post("/solve", config)
-          .subscribe(x => {
-            const r = x as Shift[];
-            const results = r.map(a => new Result(DateTime.fromISO(a.date), a.shift, config.people.filter(p => p.id == a.id_person)[0]));
-            this.results.next(results);
+          .subscribe({
+            next: (x) => 
+              {
+                const r = x as Shift[];
+                const results = r.map(a => new Result(DateTime.fromISO(a.date), a.shift, config.people.filter(p => p.id == a.id_person)[0]));
+                this.results.next(results);
+              },
+            error: () => this.results.next(ScheduleStatus.NotFound)
           });
       });
   }

@@ -1,5 +1,5 @@
-use actix_files::Files;
-use actix_web::{middleware::Logger, post, web, App, HttpServer};
+use actix_files::{Files, NamedFile};
+use actix_web::{middleware::Logger, post, web, App, HttpServer, HttpRequest};
 use env_logger::Env;
 pub mod configuration;
 pub mod shift;
@@ -7,7 +7,7 @@ use chrono::{Datelike, Duration, DateTime, Utc};
 use configuration::{Configuration, Person};
 use rand::{seq::SliceRandom, thread_rng};
 use shift::Shift;
-use std::{ops::Add, error::Error, fmt};
+use std::{ops::Add, error::Error, fmt, path::PathBuf};
 
 fn check_repeated_sundays(shifts: &Vec<Shift>, new_shift: &Shift) -> bool {
     if new_shift.date.weekday() != chrono::Weekday::Sun {
@@ -134,16 +134,20 @@ async fn solve(config: web::Json<Configuration>) -> Result<web::Json<Vec<Shift>>
     return Ok(web::Json(answer));
 }
 
+async fn index(_req: HttpRequest) -> NamedFile {
+    let path: PathBuf = "./dist/index.html".parse().unwrap();
+    NamedFile::open(path).unwrap()
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=trace");
     env_logger::init_from_env(Env::default().default_filter_or("info"));
-
     HttpServer::new(|| {
-
         App::new()
             .wrap(Logger::default())
             .service(solve)
+            .route("/", web::get().to(index))
             .service(Files::new("/", "./dist").prefer_utf8(true))
     })
     .bind(("0.0.0.0", 8080))?
