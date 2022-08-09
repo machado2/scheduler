@@ -17,10 +17,12 @@ export class ConfigurationService {
 
   constructor() { 
     this.modifyConfiguration(config => {
-      config.addPerson('Alice');
-      config.addPerson('Bob');
-      config.addPerson('Carlos');
-      config.addPerson('Rubens');
+      config.addPerson('Person 1');
+      config.addPerson('Person 2');
+      config.addPerson('Person 3');
+      config.addPerson('Person 4');
+      config.addPerson('Person 5');
+      config.addPerson('Person 6');
     });
   }
 

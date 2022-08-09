@@ -1,8 +1,12 @@
-<div class="sidebar">
-    <app-configform></app-configform>
-    <app-people></app-people>
-</div>
-<div class="main">
-    <app-restrictions></app-restrictions>
-    <app-schedule></app-schedule>
+<div class="content">
+    <mat-tab-group>
+        <mat-tab label="Parameters">
+            <app-configform></app-configform>
+            <app-people></app-people>
+        </mat-tab>
+        <mat-tab label="Schedule">
+            <app-restrictions></app-restrictions>
+            <app-schedule></app-schedule>
+        </mat-tab>
+    </mat-tab-group>
 </div>
