@@ -5,7 +5,6 @@ pub mod configuration;
 pub mod shift;
 use chrono::{Datelike, Duration, DateTime, Utc};
 use configuration::{Configuration, Person};
-use rand::{seq::SliceRandom, thread_rng};
 use shift::Shift;
 use std::{ops::Add, error::Error, fmt, path::PathBuf};
 
@@ -103,10 +102,12 @@ fn recursive_answer(started_time : DateTime<Utc>, config: &Configuration, previo
         return Err(Box::new(NotFoundError{}));
     }
     
-    let mut people = config.people.to_vec();
-    let mut rng = thread_rng();
-    people.shuffle(&mut rng);
-    for person in config.people.iter() {
+    let mut people_counted = config.people.iter()
+        .map(|p| (p, previous_shifts.iter().filter(|s| s.id_person == p.id).count()))
+        .collect::<Vec<(&Person, usize)>>();
+    people_counted.sort_by_key(|a| a.1);
+    let people: Vec<&Person> = people_counted.iter().map(|a| a.0).collect();
+    for person in people.into_iter() {
         let next = next_shift(config, previous_shifts, person);
         if !check_rules(config.parameters.numberOfShifts, previous_shifts, &next) {
             let mut shifts: Vec<Shift> = previous_shifts.to_vec();
